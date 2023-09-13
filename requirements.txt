@@ -1,3 +1,4 @@
 Flask
 Gunicorn
 openai==0.27.8
+Flask-Dropzone==1.6.0
