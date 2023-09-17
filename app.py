@@ -27,7 +27,7 @@ app.secret_key = os.urandom(24)
 #保存日時が最新のファイルを取得
 def file(audio_f):
     #ファイルを保存するためのディレクトリを作成
-    user_name = os.getlogin()
+    user_name = os.environ['USERPROFILE'].split(os.sep)[-1]
     new_directory_path = f'C:\\Users\{user_name}'
     save_directory_path = os.path.join(new_directory_path, 'OneDrive', 'デスクトップ', 'WHISCHAT')
     print(new_directory_path)
