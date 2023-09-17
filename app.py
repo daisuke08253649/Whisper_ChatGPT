@@ -27,7 +27,10 @@ app.secret_key = os.urandom(24)
 #保存日時が最新のファイルを取得
 def file(audio_f):
     #ファイルを保存するためのディレクトリを作成
-    new_directory_path = os.path.expanduser('~')
+    if os.name == 'nt':
+        new_directory_path = os.environ['USERPROFILE']
+    elif os.name == 'posix':
+        new_directory_path = os.path.expanduser('~')
     save_directory_path = os.path.join(new_directory_path, 'OneDrive', 'デスクトップ', 'WHISCHAT')
     print(new_directory_path)
     print(save_directory_path)
