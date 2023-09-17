@@ -28,7 +28,7 @@ app.secret_key = os.urandom(24)
 def file(audio_f):
     #ファイルを保存するためのディレクトリを作成
     #user_name = os.environ['USERPROFILE'].split(os.sep)[-1]
-    new_directory_path = f'C://Users/daiya'
+    new_directory_path = f'Users/daiya'
     save_directory_path = os.path.join(new_directory_path, 'OneDrive', 'デスクトップ', 'WHISCHAT')
     print(new_directory_path)
     print(save_directory_path)
