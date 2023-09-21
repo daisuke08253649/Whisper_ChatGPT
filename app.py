@@ -28,16 +28,17 @@ app.secret_key = os.urandom(24)
 def file(audio_f):
     #ファイルを保存するためのディレクトリを作成
     #user_name = os.environ['USERPROFILE'].split(os.sep)[-1]
-    new_directory_path = f'/Users/daiya'
-    save_directory_path = os.path.join(new_directory_path, 'OneDrive', 'デスクトップ', 'WHISCHAT')
-    print(new_directory_path)
-    print(save_directory_path)
+    #new_directory_path = f'/Users/daiya'
+    #save_directory_path = os.path.join(new_directory_path, 'OneDrive', 'デスクトップ', 'WHISCHAT')
+    save_directory_path = os.path.join('./static/audio')
+    #print(new_directory_path)
+    #print(save_directory_path)
     #ディレクトリが存在しない場合は作成する
-    if not os.path.exists(save_directory_path):
-        os.makedirs(save_directory_path)
-        print('ディレクトリを作成しました')
-    else:
-        print('同じ名前のディレクトリが既に存在します')
+    #if not os.path.exists(save_directory_path):
+        #os.makedirs(save_directory_path)
+        #print('ディレクトリを作成しました')
+    #else:
+        #print('同じ名前のディレクトリが既に存在します')
 
     app.config['UPLOAD_FOLDER'] = save_directory_path
     FOLDER = app.config['UPLOAD_FOLDER']
