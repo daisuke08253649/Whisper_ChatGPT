@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}home{% endblock %}
+
+{% block content %}
+<form action="/" method="POST" enctype="multipart/form-data">
+  <div class="audio-form">
+    <div class="left-side">
+      <div class="file">
+        <label>
+          ファイルを選択
+          <input type="file" id="file_input" name="audio_file" style="display:none;" accept="audio/*" multiple>
+        </label>
+        <p id="file_name"></p>
+      </div>
+      <div class="dropzone" id="drop_zone">
+        <p class="drop_text">ここにファイルをドロップしてください</p>
+      </div>
+    </div>
+
+    <div class="right-side">
+      <input class="api_key" type="password" name="api_key" placeholder="OpenAIのAPIキーを入力してください">
+      <div class="send_file">
+        <input class="upload" type="submit" value="議事録作成">
+      </div>
+      <div class="form">
+        <p class="title">議事録</p>
+        {% if result %}
+        <p class="text_result">{{result}}</p>
+        {% else %}
+        <p class="text">※ここに議事録が表示されます</p>
+        {% endif %}
+      </div>
+</form>
+
+      <div class="save-button">
+        {% if result %}
+        <form action="/download_pdf" target="_blank">
+          <input type="hidden" name="text_data" value="{{ session['text_data'] }}">
+          <button class="save">PDF化する</button>
+        </form>
+        <form action="/edit" method="POST">
+          <input type="hidden" name="text_data" value="{{ session['text_data'] }}">
+          <button class="save edit">編集する</button>
+        </form>
+        {% else %}
+        <button class="save" disabled>PDF化する</button>
+        <form action="/edit" method="GET">
+          <button class="save edit" disabled>編集する</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+
+<script>
+  /* ファイル名表示 */
+  document.querySelector('input[name="audio_file"]').addEventListener('change', function(e){
+    let parent = this.closest('.file');
+    parent.querySelector('#file_name').innerHTML = '';
+    for (file of e.target.files){
+      parent.querySelector('#file_name').insertAdjacentHTML('beforeend', file.name.replace(/\\/g, '&#92;') + '<br>');
+    }
+  });
+
+
+  /* ドラッグ＆ドロップ */
+  const dropZone = document.getElementById('drop_zone');
+  const fileNames = document.getElementById('file_name');
+  const fileInput = document.getElementById('file_input');
+
+  fileInput.addEventListener('change', (e) => {
+    const selectedFiles = e.target.files;
+  });
+
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.style.backgroundColor = '#eee';
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.style.backgroundColor = '#f5f5f5'
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.style.backgroundColor = '#f5f5f5'
+
+    const files = e.dataTransfer.files;
+    const existingFiles = fileInput.files;
+
+    let fileNamesText = '';
+    for (const file of files) {
+      fileNamesText += file.name + '<br>';
+    }
+    fileNames.innerHTML += fileNamesText;
+
+    const combinedFiles = new DataTransfer();
+    for (let i = 0; i < existingFiles.length; i++) {
+      combinedFiles.items.add(existingFiles[i]);
+    }
+    for (let i = 0; i < files.length; i++) {
+      combinedFiles.items.add(files[i]);
+    }
+
+    fileInput.files = combinedFiles.files;
+  });
+
+
+</script>
+{% endblock %}
