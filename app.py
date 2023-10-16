@@ -69,6 +69,17 @@ def file(audio_f):
     return new_file, FOLDER
 
 
+#ディレクトリ内の音声ファイルを削除
+def remove_files():
+    directory = os.path.join('./static/audio')
+
+    for file_name in os.listdir(directory):
+        file_path = os.path.join(directory, file_name)
+
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+            print(f'{file_name} was removed from {directory}')
+
 
 #whisperで文字起こし
 def whisper(new_file, folder):
@@ -148,6 +159,7 @@ def edit():
 def generate_text():
     text_data = session.get('text_data', '')
     text_paragraphs = text_data.split('\n')
+    remove_files()
     res = text_to_pdf(text_paragraphs)
     return res
     
@@ -158,6 +170,7 @@ def generate_text():
 def edit_generate_text():
     edited_data = request.form['edited_data']
     edited_paragraphs = edited_data.split('\n')
+    remove_files()
     res = text_to_pdf(edited_paragraphs)
     return res
 
