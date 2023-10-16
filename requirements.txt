@@ -1,5 +1,5 @@
-Flask
-Gunicorn
+Flask==2.0.2
+Gunicorn==20.1.0
 openai==0.27.8
 Flask-Dropzone==1.6.0
 reportlab==4.0.4
