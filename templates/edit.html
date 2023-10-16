@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="edit_page">
-  <form action="/edit_download_pdf" method="POST">
+  <form action="/edit_download_pdf" method="POST" target="_blank">
     <textarea name="edited_data">{{ edit_text }}</textarea>
     <button class="save">PDF化する</button>
   </form>
