@@ -37,7 +37,7 @@
         {% if result %}
         <form action="/download_pdf" target="_blank">
           <input type="hidden" name="text_data" value="{{ session['text_data'] }}">
-          <button class="save">PDF化する</button>
+          <button class="save">ダウンロード</button>
         </form>
         <form action="/edit" method="POST">
           <input type="hidden" name="text_data" value="{{ session['text_data'] }}">
