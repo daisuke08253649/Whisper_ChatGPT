@@ -1,6 +1,7 @@
 import openai
 import os
 from flask import Flask, render_template, redirect, request, session, Response
+from werkzeug.exceptions import InternalServerError
 from datetime import datetime
 from io import BytesIO
 from reportlab.lib.pagesizes import letter
@@ -142,7 +143,7 @@ def whisper_chatgpt():
             result = chatgpt(whisper_text)
             session['text_data'] = result
             return render_template('home.html', result=result)
-        except openai.error.APIError:
+        except (openai.error.APIError, InternalServerError):
             return render_template('home.html', error='※ファイルサイズが大きすぎます。(最大26MBまで)')
     else:
         return render_template('home.html', text='※ここに議事録が表示されます')
