@@ -27,6 +27,8 @@
         <p class="title">議事録</p>
         {% if result %}
         <p class="text_result">{{result}}</p>
+        {% elif error %}
+        <p class="text_error">{{error}}</p>
         {% else %}
         <p class="text">※ここに議事録が表示されます</p>
         {% endif %}
