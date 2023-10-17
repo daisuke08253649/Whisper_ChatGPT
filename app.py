@@ -136,11 +136,14 @@ def whisper_chatgpt():
     if request.method == 'POST':
         openai.api_key = request.form['api_key']
         audio_f = request.files['audio_file']
-        a_file, folder = file(audio_f)
-        whisper_text = whisper(a_file, folder)
-        result = chatgpt(whisper_text)
-        session['text_data'] = result
-        return render_template('home.html', result=result)
+        try:
+            a_file, folder = file(audio_f)
+            whisper_text = whisper(a_file, folder)
+            result = chatgpt(whisper_text)
+            session['text_data'] = result
+            return render_template('home.html', result=result)
+        except openai.error.APIError:
+            return render_template('home.html', error='※ファイルサイズが大きすぎます。(最大26MBまで)')
     else:
         return render_template('home.html', text='※ここに議事録が表示されます')
 
